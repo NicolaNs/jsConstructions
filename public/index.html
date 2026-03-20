@@ -1,89 +1,226 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Constructions - יומן עבודה</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.11.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.11.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.11.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="view-login" class="view active">
+  <div class="card center-card">
+    <div class="logo-circle">🏗️</div>
+    <h1>JS Constructions</h1>
+    <p class="subtitle">יומן עבודה</p>
+    <div class="field">
+      <label>קוד כניסה</label>
+      <input id="login-code" type="password" inputmode="numeric" placeholder="הזן קוד" />
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <div id="login-error" class="error hidden"></div>
+    <button class="btn-primary" onclick="doLogin()">כניסה</button>
+  </div>
+</div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+<!-- ═══════════════ EMPLOYEE SELECT ═══════════════ -->
+<div id="view-select" class="view">
+  <div class="card center-card">
+    <h2>מי אתה?</h2>
+    <div id="employee-list" class="employee-list"></div>
+  </div>
+</div>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+<!-- ═══════════════ EMPLOYEE SCREEN ═══════════════ -->
+<div id="view-employee" class="view">
+  <header class="topbar">
+    <span id="emp-name-header" class="topbar-title"></span>
+    <button class="btn-icon" onclick="logout()">יציאה</button>
+  </header>
+  <div class="container">
+    <div class="date-badge">
+      <span id="emp-day"></span> | <span id="emp-date"></span>
+    </div>
+
+    <div class="checkin-row">
+      <div id="btn-checkin" class="time-card" onclick="checkIn()">
+        <div class="time-icon">🟢</div>
+        <div class="time-label">כניסה</div>
+        <div id="checkin-time" class="time-value">לחץ לרישום</div>
+      </div>
+      <div id="btn-checkout" class="time-card" onclick="checkOut()">
+        <div class="time-icon">🔵</div>
+        <div class="time-label">יציאה</div>
+        <div id="checkout-time" class="time-value">לחץ לרישום</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>פרויקט</label>
+      <select id="emp-project">
+        <option value="">בחר פרויקט...</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>הערות לחשב</label>
+      <textarea id="emp-notes" rows="3" placeholder="לדוגמה: בקשת מפרעה, הוצאה מיוחדת..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="saveEmployeeEntry()">שמור יום עבודה</button>
+    <div id="emp-success" class="success hidden">✅ נשמר בהצלחה!</div>
+  </div>
+</div>
+
+<!-- ═══════════════ MANAGER SCREEN ═══════════════ -->
+<div id="view-manager" class="view">
+  <header class="topbar">
+    <span class="topbar-title">מנהל - יומן עבודה</span>
+    <div class="topbar-actions">
+      <button class="btn-icon" onclick="showView('view-settings')">⚙️</button>
+      <button class="btn-icon" onclick="exportExcel()">📊 ייצוא</button>
+      <button class="btn-icon" onclick="logout()">יציאה</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" onclick="filterEntries('all', this)">הכל</button>
+      <button class="tab" onclick="filterEntries('pending', this)">ממתין</button>
+      <button class="tab" onclick="filterEntries('complete', this)">הושלם</button>
+    </div>
+
+    <button class="btn-primary" onclick="openNewEntry()">+ הוסף רשומה</button>
+
+    <div id="entries-list" class="entries-list"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ENTRY FORM ═══════════════ -->
+<div id="view-entry-form" class="view">
+  <header class="topbar">
+    <button class="btn-icon" onclick="showView('view-manager')">→ חזור</button>
+    <span id="form-title" class="topbar-title">רשומה חדשה</span>
+  </header>
+  <div class="container">
+    <input type="hidden" id="form-entry-id" />
+
+    <div class="grid-2">
+      <div class="field">
+        <label>עובד</label>
+        <select id="form-employee" onchange="onEmployeeChange()">
+          <option value="">בחר עובד...</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>פרויקט</label>
+        <select id="form-project">
+          <option value="">בחר פרויקט...</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>שעת כניסה</label>
+        <input id="form-checkin" type="time" />
+      </div>
+      <div class="field">
+        <label>שעת יציאה</label>
+        <input id="form-checkout" type="time" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>שעות עבודה</label>
+      <input id="form-hours" type="number" step="0.5" min="0" placeholder="0" />
+    </div>
+
+    <div class="section-title">💰 הוצאות</div>
+    <div class="grid-2">
+      <div class="field">
+        <label>משיכות (₪)</label>
+        <input id="form-withdrawals" type="number" min="0" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>למי המשיכה</label>
+        <input id="form-withdrawal-for" type="text" placeholder="שם..." />
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label>אוכל (₪)</label>
+        <input id="form-food" type="number" min="0" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>חניה (₪)</label>
+        <input id="form-parking" type="number" min="0" placeholder="0" />
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label>דלק (₪)</label>
+        <input id="form-fuel" type="number" min="0" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>עלות לינה (₪)</label>
+        <input id="form-accommodation" type="number" min="0" placeholder="0" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>התחשבות עלות לבעל פרויקט (₪)</label>
+      <input id="form-owner-cost" type="number" min="0" placeholder="0" />
+    </div>
+
+    <div class="field">
+      <label>הערות</label>
+      <textarea id="form-notes" rows="2" placeholder="הערות..."></textarea>
+    </div>
+
+    <div id="form-cost-preview" class="cost-preview hidden"></div>
+
+    <button class="btn-primary" onclick="saveEntry()">✅ שמור רשומה</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SETTINGS ═══════════════ -->
+<div id="view-settings" class="view">
+  <header class="topbar">
+    <button class="btn-icon" onclick="showView('view-manager')">→ חזור</button>
+    <span class="topbar-title">הגדרות</span>
+  </header>
+  <div class="container">
+
+    <div class="import-box">
+      <div class="section-title">📂 ייבוא מקובץ Excel</div>
+      <p style="font-size:13px;color:#666;margin-bottom:8px">בחר את קובץ ה-Excel שלך (לשונית EmployeesDB) — העובדים והפרויקטים יתווספו אוטומטית</p>
+      <input type="file" id="import-file" accept=".xlsx,.xls" onchange="importFromExcel(this)" style="display:none" />
+      <button class="btn-primary" onclick="document.getElementById('import-file').click()">📥 בחר קובץ Excel לייבוא</button>
+      <div id="import-status" class="hidden" style="margin-top:8px;font-size:13px;color:green"></div>
+    </div>
+
+    <div class="section-title" style="margin-top:24px">👷 עובדים</div>
+    <div id="employees-list" class="settings-list"></div>
+    <div class="grid-2">
+      <input id="new-emp-name" type="text" placeholder="שם עובד" />
+      <button class="btn-secondary" onclick="addEmployee()">+ הוסף</button>
+    </div>
+
+    <div class="section-title" style="margin-top:24px">🏗️ פרויקטים</div>
+    <div id="projects-list" class="settings-list"></div>
+    <div class="grid-2">
+      <input id="new-project-name" type="text" placeholder="שם פרויקט" />
+      <button class="btn-secondary" onclick="addProject()">+ הוסף</button>
+    </div>
+  </div>
+</div>
+
+<!-- SheetJS for Excel export -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+<!-- Firebase -->
+<script type="module" src="app.js"></script>
+
+</body>
 </html>
